@@ -1,0 +1,13 @@
+*{box-sizing:border-box}body{margin:0;background:#000;color:#fff;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+.app{max-width:720px;margin:auto;padding:28px 18px}
+h1{text-align:center;font-size:52px;margin:20px 0 40px}
+.card{background:#0b0b0b;border:2px solid #4a4a4a;border-radius:24px;padding:22px;box-shadow:0 0 18px rgba(255,255,255,.08);margin-bottom:24px}
+.balance{display:flex;justify-content:space-between;align-items:center;font-size:22px}
+.left{display:flex;gap:12px;align-items:center}.amount{font-size:28px}
+h2{margin:0 0 12px}hr{border:none;border-top:1px solid #333;margin:18px 0}
+.row{display:flex;gap:18px;font-size:20px;align-items:flex-start}
+.row p{margin:0;color:#d5d5d5;line-height:1.4}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.tile{background:#0b0b0b;color:#fff;border:2px solid #4a4a4a;border-radius:22px;padding:24px;font-size:24px;display:flex;justify-content:space-between;cursor:pointer}
+.tile:hover{border-color:#777}
+@media(max-width:700px){h1{font-size:34px}.grid{grid-template-columns:1fr}.tile,.row,.balance{font-size:18px}.amount{font-size:24px}}
