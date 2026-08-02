@@ -1,0 +1,33 @@
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+background:#0f1115;
+color:#fff;
+font-family:Arial,sans-serif;
+display:flex;
+justify-content:center;
+padding:24px;
+}
+.container{width:100%;max-width:420px}
+.card{
+background:#181b22;
+border:1px solid #2a2f3a;
+border-radius:18px;
+padding:18px;
+margin-bottom:18px;
+}
+.label{font-size:12px;color:#8d96a8;margin-bottom:8px}
+#balance{font-size:30px;font-weight:700}
+.welcome h2{margin-bottom:8px}
+.welcome p{color:#b8c0cf;margin-top:6px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tile{
+background:#20242d;
+border:1px solid #333947;
+border-radius:16px;
+padding:26px;
+font-size:18px;
+font-weight:bold;
+color:#fff;
+cursor:pointer;
+}
+.tile:hover{background:#2a303b}
