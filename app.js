@@ -1,1 +1,0 @@
-const ids=["home","catalog","dead","delivery","contact"];function show(id){ids.forEach(i=>document.getElementById(i).classList.add("hidden"));document.getElementById(id).classList.remove("hidden");}
