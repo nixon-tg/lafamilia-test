@@ -1,0 +1,8 @@
+body{margin:0;background:#111827;color:#fff;font-family:Arial,sans-serif}
+.app{max-width:430px;margin:auto;padding:20px}
+.logo{text-align:center;font-size:28px;font-weight:700;margin:18px 0}
+.card{background:#1f2937;border-radius:18px;padding:18px;margin-bottom:16px;border:1px solid #374151}
+.balance{display:flex;justify-content:space-between;align-items:center}
+button{width:100%;padding:16px;border:none;border-radius:14px;background:#2b3442;color:#fff;font-size:16px;margin-bottom:12px}
+button:active{transform:scale(.98)}
+p{color:#d1d5db;line-height:1.5}
