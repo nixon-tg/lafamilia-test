@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>La Familia Shop</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+<div class="app">
+
+    <header class="header">
+        <img src="assets/logo.png" class="logo" alt="La Familia Shop">
+    </header>
+
+    <!-- Saldo -->
+    <section class="card balance-card">
+
+        <div class="small balance-title">
+            <i class="fa-solid fa-wallet inline-icon"></i>
+            <span>Saldo</span>
+        </div>
+
+        <div class="balance">
+            0,00 zł
+        </div>
+
+    </section>
+
+    <!-- Powitanie -->
+    <section class="card">
+
+        <h2 class="welcome-title">
+            <i class="fa-solid fa-hand inline-icon"></i>
+            Witaj w La Familia Shop
+        </h2>
+
+        <p>
+            Twój sklep dostępny bezpośrednio w Telegramie.
+        </p>
+
+        <div class="divider"></div>
+
+        <ul>
+            <li>Przeglądaj dostępne produkty.</li>
+            <li>Doładuj saldo z poziomu bota.</li>
+            <li>Zamawiaj szybko i wygodnie.</li>
+        </ul>
+
+        <p class="choose">
+            Wybierz opcję poniżej:
+        </p>
+
+    </section>
+
+    <!-- Przyciski -->
+    <div class="row">
+
+        <button id="menuBtn" class="nav-btn">
+
+            <i class="fa-solid fa-table-cells-large btn-icon"></i>
+
+            <span>MENU</span>
+
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+
+        </button>
+
+        <button id="contactBtn" class="nav-btn">
+
+            <i class="fa-solid fa-headset btn-icon"></i>
+
+            <span>KONTAKT</span>
+
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+
+        </button>
+
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
