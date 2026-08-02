@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="pl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>La Familia Shop</title><link rel="stylesheet" href="style.css"></head><body>
+
+<div id="home" class="page">
+<h1>La Familia Shop</h1><hr>
+<h2>🚧 Wkrótce startujemy!</h2>
+<p>Pracujemy nad uruchomieniem La Familia Shop.</p>
+<p><b>⏳ Oficjalny start już wkrótce.</b></p>
+<p>Dziękujemy za cierpliwość! 🖤</p>
+<div class="buttons">
+<button onclick="show('catalog')">📂 KATALOG</button>
+<button onclick="show('contact')">📞 KONTAKT</button>
+</div>
+</div>
+
+<div id="catalog" class="page hidden">
+<h1>Katalog</h1><hr>
+<div class="buttons">
+<button onclick="show('dead')">📍 DeadDrop</button>
+<button onclick="show('delivery')">📦 Dostawa</button>
+</div>
+<button class="back" onclick="show('home')">⬅ POWRÓT</button>
+</div>
+
+<div id="dead" class="page hidden">
+<h1>📍 DeadDrop</h1><hr>
+<p><b>🚧 Usługa DeadDrop jest obecnie w przygotowaniu.</b></p>
+<p>Pracujemy nad jej uruchomieniem, aby zapewnić bezpieczny i wygodny odbiór zamówień.</p>
+<p>Dziękujemy za cierpliwość.</p><hr>
+<p><b>⏳ Wkrótce dostępne.</b></p>
+<button class="back" onclick="show('catalog')">⬅ POWRÓT</button>
+</div>
+
+<div id="delivery" class="page hidden">
+<h1>📦 Dostawa</h1><hr>
+<p><b>🚧 Usługa Dostawa jest obecnie w przygotowaniu.</b></p>
+<p>Pracujemy nad uruchomieniem systemu zamówień z dostawą oraz katalogu produktów, aby zapewnić szybkie i wygodne zakupy.</p>
+<p>Dziękujemy za cierpliwość.</p><hr>
+<p><b>⏳ Wkrótce dostępne.</b></p>
+<button class="back" onclick="show('catalog')">⬅ POWRÓT</button>
+</div>
+
+<div id="contact" class="page hidden">
+<h1>📞 Kontakt</h1><hr>
+<p>Potrzebujesz pomocy lub masz pytania dotyczące zamówienia?</p>
+<p>Nasz zespół chętnie Ci pomoże i odpowie na wszystkie pytania tak szybko, jak to możliwe.</p><hr>
+<p>🟢 Obsługa klienta dostępna 24/7</p>
+<div class="buttons">
+<button onclick="window.open('https://t.me/elotonieja','_blank')">📨 NAPISZ</button>
+<button onclick="show('home')">⬅ POWRÓT</button>
+</div>
+</div>
+
+<script src="app.js"></script>
+</body></html>
