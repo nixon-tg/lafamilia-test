@@ -31,11 +31,15 @@ body{
 .header{
     display:flex;
     justify-content:center;
-    margin:2px 0 14px;
+    margin:6px 0 0;
 }
 
 .logo{
-    width:245px;
+    width:260px;
+}
+
+.balance-card{
+    margin-top:-20px;
 }
 
 /* =========================
