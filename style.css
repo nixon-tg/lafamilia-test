@@ -2,67 +2,26 @@
 :root{--bg:#000;--card:#111214;--line:#303236;--txt:#fff;--muted:#b5b5b5}
 body{background:var(--bg);color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
 .app{max-width:420px;margin:auto;padding:18px 18px 42px}
-.header{display:flex;justify-content:center;margin:10px 0 18px}
-.logo{width:205px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;margin-bottom:16px}
+.header{display:flex;justify-content:center;margin:2px 0 12px}
+.logo{width:245px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px;margin-bottom:16px}
 .small{font-size:15px;color:var(--muted);margin-bottom:12px}
 .balance{font-size:42px;font-weight:800}
 h2{font-size:20px;margin-bottom:12px}
 p,li{font-size:15px;color:#d5d5d5;line-height:1.6}
 .divider{height:1px;background:#2a2d31;margin:16px 0}
 ul{padding-left:20px;margin-bottom:14px}
-.row{display:flex;gap:12px}
-button{flex:1;height:64px;border-radius:18px;background:#111214;border:1px solid var(--line);color:#fff;font-size:16px;font-weight:700;transition:.15s}
-button:active{transform:scale(.97)}
+.row{display:flex;gap:12px;align-items:stretch}
+.row button{flex:1 1 0;width:0}
+button{
+display:flex;align-items:center;justify-content:flex-start;
+gap:10px;padding:0 20px;height:76px;
+border-radius:20px;background:#111214;border:1px solid #303236;
+color:#fff;font-size:18px;font-weight:700;transition:.2s}
+button span{flex:1;text-align:left;letter-spacing:.3px}
+button:active{transform:scale(.98)}
 .card{animation:fade .25s ease}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-
-/* Ikony */
-
-.inline-icon{
-    width:22px;
-    height:22px;
-    margin-right:8px;
-    vertical-align:-4px;
-}
-
-.btn-icon{
-    width:24px;
-    height:24px;
-    flex-shrink:0;
-}
-
-.arrow-icon{
-    width:18px;
-    height:18px;
-    margin-left:auto;
-    opacity:.55;
-}
-
-/* Kafelki */
-
-button{
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-    gap:14px;
-    padding:0 20px;
-    height:72px;
-    border-radius:20px;
-    background:#111214;
-    border:1px solid #303236;
-    color:#fff;
-    font-size:18px;
-    font-weight:700;
-    transition:.2s;
-}
-
-button span{
-    flex:1;
-    text-align:left;
-    letter-spacing:.3px;
-}
-
-button:active{
-    transform:scale(.98);
-}
+.inline-icon{width:22px;height:22px;margin-right:8px;vertical-align:-4px}
+.btn-icon{width:24px;height:24px;flex-shrink:0}
+.arrow-icon{width:18px;height:18px;margin-left:auto;opacity:.55}
