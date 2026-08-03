@@ -18,7 +18,7 @@ display:flex;align-items:center;justify-content:flex-start;
 gap:10px;padding:0 20px;height:76px;
 border-radius:20px;background:#111214;border:1px solid #303236;
 color:#fff;font-size:18px;font-weight:700;transition:.2s}
-button span{flex:1;text-align:left;letter-spacing:.3px}
+button span{flex:none;text-align:left;letter-spacing:.3px}
 button:active{transform:scale(.98)}
 .card{animation:fade .25s ease}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
