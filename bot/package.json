@@ -1,0 +1,16 @@
+{
+  "name": "lafamilia-telegram-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "La Familia Telegram bot for lawful products and customer support.",
+  "type": "module",
+  "scripts": {
+    "start": "node src/bot.js",
+    "dev": "node --watch src/bot.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "dotenv": "^16.6.1",
+    "grammy": "^1.38.3"
+  }
+}
