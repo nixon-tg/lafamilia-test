@@ -1,5 +1,5 @@
 import { Bot, InlineKeyboard } from 'grammy';
-import { createOrder, getProduct, initDb, listProducts, listRecentOrders, listUserOrders, setOrderStatus, upsertUser } from './db.js';
+import { createOrder, getProduct, listProducts, listRecentOrders, listUserOrders, setOrderStatus, upsertUser } from './db.js';
 
 const token = process.env.BOT_TOKEN;
 if (!token) throw new Error('BOT_TOKEN is required');
@@ -63,4 +63,3 @@ bot.command('admin',async ctx=>{if(!isAdmin(ctx))return ctx.reply('Brak uprawnie
 bot.command('status',async ctx=>{if(!isAdmin(ctx))return ctx.reply('Brak uprawnień.');const parts=ctx.message.text.trim().split(/\s+/);const id=Number(parts[1]);const status=parts[2];const allowed=new Set(['new','processing','ready','completed','cancelled']);if(!id||!allowed.has(status))return ctx.reply('Użycie: /status ID new|processing|ready|completed|cancelled');await setOrderStatus(id,status);await ctx.reply(`✅ Zamówienie #${id}: ${status}`);});
 
 bot.catch(err=>console.error('La Familia bot error:',err.error||err));
-await initDb();
