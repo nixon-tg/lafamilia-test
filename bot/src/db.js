@@ -9,7 +9,8 @@ let initialized;
 export async function initDb() {
   if (!initialized) {
     initialized = (async () => {
-      await sql`CREATE TABLE IF NOT EXISTS users (id BIGINT PRIMARY KEY, username TEXT, first_name TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;
+      await sql`CREATE TABLE IF NOT EXISTS users (id BIGINT PRIMARY KEY, username TEXT, first_name TEXT, balance_cents INTEGER NOT NULL DEFAULT 0, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;
+      await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS balance_cents INTEGER NOT NULL DEFAULT 0`;
       await sql`CREATE TABLE IF NOT EXISTS products (id SERIAL PRIMARY KEY, name TEXT NOT NULL, description TEXT NOT NULL DEFAULT '', price_cents INTEGER NOT NULL, active BOOLEAN NOT NULL DEFAULT TRUE)`;
       await sql`CREATE TABLE IF NOT EXISTS orders (id SERIAL PRIMARY KEY, user_id BIGINT NOT NULL REFERENCES users(id), status TEXT NOT NULL DEFAULT 'new', total_cents INTEGER NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;
       await sql`CREATE TABLE IF NOT EXISTS order_items (id SERIAL PRIMARY KEY, order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE, product_id INTEGER NOT NULL REFERENCES products(id), quantity INTEGER NOT NULL, price_cents INTEGER NOT NULL)`;
@@ -25,6 +26,16 @@ export async function initDb() {
 export async function upsertUser(user) {
   await initDb();
   await sql`INSERT INTO users (id, username, first_name) VALUES (${user.id}, ${user.username || null}, ${user.first_name || null}) ON CONFLICT (id) DO UPDATE SET username=EXCLUDED.username, first_name=EXCLUDED.first_name`;
+}
+
+export async function getUserProfile(userId) {
+  await initDb();
+  const rows = await sql`
+    SELECT u.id, u.username, u.first_name, u.balance_cents,
+      (SELECT COUNT(*)::int FROM orders o WHERE o.user_id=u.id AND o.status='completed') AS successful_orders
+    FROM users u WHERE u.id=${userId}
+  `;
+  return rows[0] || null;
 }
 
 export async function listProducts() { await initDb(); return sql`SELECT * FROM products WHERE active = TRUE ORDER BY id`; }
