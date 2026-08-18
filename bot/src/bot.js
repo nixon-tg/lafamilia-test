@@ -30,19 +30,21 @@ async function safeEdit(ctx, text, reply_markup) {
   try {
     await ctx.editMessageText(text, { parse_mode: 'Markdown', reply_markup });
   } catch (err) {
-    if (!String(err?.description || err).includes('message is not modified')) throw err;
+    const description = String(err?.description || err?.message || err);
+    if (!description.includes('message is not modified')) throw err;
   }
 }
 
-bot.use(async (ctx, next) => { if (ctx.from) await upsertUser(ctx.from); await next(); });
+async function ensureUser(ctx) {
+  if (ctx.from) await upsertUser(ctx.from);
+}
 
-bot.command('start', async ctx => {
-  try { await ctx.deleteMessage(); } catch {}
-  await ctx.reply('🖤 *La Familia*\n\nWybierz opcję:', { parse_mode: 'Markdown', reply_markup: mainKeyboard() });
-});
-bot.command('help', ctx => ctx.reply('/start – menu\n/orders – moje zamówienia\n/profile – profil\n\nAdministrator: /admin, /status ID STATUS'));
+async function showHome(ctx) {
+  await safeEdit(ctx, '🖤 *La Familia*\n\nWybierz opcję:', mainKeyboard());
+}
 
 async function showProfile(ctx) {
+  await ensureUser(ctx);
   const p = await getUserProfile(ctx.from.id);
   const username = p?.username ? `@${p.username}` : 'Brak nicku';
   const text = `👤 *Profil*\n\n🆔 ID użytkownika: \`${p?.id || ctx.from.id}\`\n🏷 Nick: ${username}\n💰 Saldo: *${money(p?.balance_cents || 0)}*\n✅ Udane zamówienia: *${p?.successful_orders || 0}*`;
@@ -50,6 +52,7 @@ async function showProfile(ctx) {
 }
 
 async function showOrders(ctx) {
+  await ensureUser(ctx);
   const orders = await listUserOrders(ctx.from.id);
   const labels = { new: 'nowe', processing: 'w realizacji', ready: 'gotowe', completed: 'zakończone', cancelled: 'anulowane' };
   const text = orders.length
@@ -58,32 +61,72 @@ async function showOrders(ctx) {
   await safeEdit(ctx, text, ordersKeyboard());
 }
 
-bot.command('profile', async ctx => { try { await ctx.deleteMessage(); } catch {} await ctx.reply('Ładowanie profilu...'); });
-bot.command('orders', async ctx => { try { await ctx.deleteMessage(); } catch {} await ctx.reply('Ładowanie zamówień...'); });
+bot.command('start', async ctx => {
+  try { await ctx.deleteMessage(); } catch {}
+  try { await ensureUser(ctx); } catch (err) { console.error('start user sync:', err); }
+  await ctx.reply('🖤 *La Familia*\n\nWybierz opcję:', { parse_mode: 'Markdown', reply_markup: mainKeyboard() });
+});
+
+bot.command('help', async ctx => {
+  try { await ctx.deleteMessage(); } catch {}
+  await ctx.reply('/start – menu\n/orders – moje zamówienia\n/profile – profil\n\nAdministrator: /admin, /status ID STATUS');
+});
+
+bot.command('profile', async ctx => {
+  try { await ctx.deleteMessage(); } catch {}
+  await ctx.reply('👤 Otwórz Profil z menu głównego.');
+});
+
+bot.command('orders', async ctx => {
+  try { await ctx.deleteMessage(); } catch {}
+  await ctx.reply('📦 Otwórz Moje zamówienia z menu głównego.');
+});
 
 bot.callbackQuery('home', async ctx => {
-  await ctx.answerCallbackQuery();
-  await safeEdit(ctx, '🖤 *La Familia*\n\nWybierz opcję:', mainKeyboard());
+  try {
+    await ctx.answerCallbackQuery();
+    await showHome(ctx);
+  } catch (err) {
+    console.error('home callback:', err);
+  }
 });
 
 bot.callbackQuery('profile', async ctx => {
-  await ctx.answerCallbackQuery();
-  try { await showProfile(ctx); } catch (err) { console.error('Profile error:', err); await ctx.answerCallbackQuery({ text: 'Nie udało się wczytać profilu.', show_alert: true }); }
+  try {
+    await showProfile(ctx);
+    await ctx.answerCallbackQuery();
+  } catch (err) {
+    console.error('profile callback:', err);
+    try { await ctx.answerCallbackQuery({ text: 'Nie udało się wczytać profilu.', show_alert: true }); } catch {}
+  }
 });
 
 bot.callbackQuery('orders', async ctx => {
-  await ctx.answerCallbackQuery();
-  try { await showOrders(ctx); } catch (err) { console.error('Orders error:', err); await ctx.answerCallbackQuery({ text: 'Nie udało się wczytać zamówień.', show_alert: true }); }
+  try {
+    await showOrders(ctx);
+    await ctx.answerCallbackQuery();
+  } catch (err) {
+    console.error('orders callback:', err);
+    try { await ctx.answerCallbackQuery({ text: 'Nie udało się wczytać zamówień.', show_alert: true }); } catch {}
+  }
 });
 
 bot.callbackQuery('topup', async ctx => {
-  await ctx.answerCallbackQuery();
-  await safeEdit(ctx, '💳 *Doładuj saldo*\n\nFunkcja doładowania zostanie podłączona w kolejnym kroku.', new InlineKeyboard().text('⬅️ Cofnij', 'profile'));
+  try {
+    await safeEdit(ctx, '💳 *Doładuj saldo*\n\nFunkcja doładowania zostanie podłączona w kolejnym kroku.', new InlineKeyboard().text('⬅️ Cofnij', 'profile'));
+    await ctx.answerCallbackQuery();
+  } catch (err) {
+    console.error('topup callback:', err);
+  }
 });
 
 bot.callbackQuery('contact', async ctx => {
-  await ctx.answerCallbackQuery();
-  await safeEdit(ctx, `💬 *Kontakt*\n\nTelegram: @${contact}`, new InlineKeyboard().text('⬅️ Cofnij', 'home'));
+  try {
+    await safeEdit(ctx, `💬 *Kontakt*\n\nTelegram: @${contact}`, new InlineKeyboard().text('⬅️ Cofnij', 'home'));
+    await ctx.answerCallbackQuery();
+  } catch (err) {
+    console.error('contact callback:', err);
+  }
 });
 
 bot.command('admin', async ctx => {
